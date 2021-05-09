@@ -1,9 +1,14 @@
 const express = require("express");
 const app = express();
 const dotenv= require('dotenv')
+var formidable = require("express-formidable");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 dotenv.config();
+
+app.use(cors());
+app.use(formidable());
 
 mongoose.connect(
   process.env.DB_URL,

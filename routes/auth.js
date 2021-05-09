@@ -5,47 +5,53 @@ const bcrypt = require('bcryptjs');
 const jwt=require('jsonwebtoken');
 
 
-router.post('/register', async(req,res)=>{
-
-    const respondToValidate = regValidation(req.body);            
+router.post('/register', async(req,res,next)=>{
+    // console.log(req.fields);
+    const respondToValidate = regValidation(req.fields);            
+    
     if(respondToValidate.error){
         const sendToClient={
             "error":"error",        
             "message":respondToValidate.error.details[0].message
         }
         res.send(sendToClient);
+        return next();
     }
     
     //if User exists
-    const emailPresent=await User.findOne({email:req.body.email});
+    const emailPresent=await User.findOne({email:req.fields.email});
     if(emailPresent){
         const sendToClient={
             "error":"error",        
             "message":"Email already present!"
         }
         res.send(sendToClient);
+        return next();
     }
 
     //Hashing password
-    const hasedPwd= await bcrypt.hash(req.body.password,10);
+    const hasedPwd= await bcrypt.hash(req.fields.password,10);
 
     const user = new User({
-        name:req.body.name,
-        email:req.body.email,
+        name:req.fields.name,
+        email:req.fields.email,
         password:hasedPwd
     });
     try {
         const savedUser=await user.save();
-        res.send({
-            user:savedUser.id 
-        });
+        const sendToClient={
+            "error":"success",        
+            "message":"Success"
+        }
+        res.send(sendToClient);
+        return next();
     } catch (error) {
         console.error(error);
     }
 })
 
 router.post('/login' , async(req,res)=>{
-
+    
     //validate
     const respondToValidate = loginValidation(req.body);            
     if(respondToValidate.error){
