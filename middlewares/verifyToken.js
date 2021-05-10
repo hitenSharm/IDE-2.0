@@ -8,6 +8,7 @@ module.exports = function auth(req, res, next) {
         "message":"Log in again"
     }
     res.send(sendToClient);
+    next();
   }
 
   try {
