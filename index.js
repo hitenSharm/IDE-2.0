@@ -22,9 +22,11 @@ const authRoute = require("./routes/auth");
 const codeExe = require('./routes/codeExecutor/runCode');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
 app.use("/api/user", authRoute);
 app.use('/coding' ,codeExe);
-
 
 
 app.listen(3000, () => {
