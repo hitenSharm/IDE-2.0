@@ -19,15 +19,19 @@ router.post('/register', async(req,res,next)=>{
     }
     
     //if User exists
-    const emailPresent=await User.findOne({email:req.fields.email});
-    if(emailPresent){
-        const sendToClient={
-            "error":"error",        
-            "message":"Email already present!"
+    User.findOne({email:req.fields.email},(err,emailPresent)=>{
+        if(err) console.error(err);
+
+        if(emailPresent){
+            const sendToClient={
+                "error":"error",        
+                "message":"Email already present!"
+            }
+            res.send(sendToClient);
+            return next();
         }
-        res.send(sendToClient);
-        return next();
-    }
+    });
+    
 
     //Hashing password
     const hasedPwd= await bcrypt.hash(req.fields.password,10);
@@ -63,15 +67,16 @@ router.post('/login' , async(req,res,next)=>{
         return next();
     }
 
-    const user=await User.findOne({email:req.fields.email});
-    if(!user){
-        const sendToClient={
-            "error":"error",        
-            "message":"Not registered!"
+        const user =await User.findOne({email:req.fields.email});
+        if(!user){
+            const sendToClient={
+                "error":"error",        
+                "message":"Not registered!"
+            }
+            res.send(sendToClient);
+            return next();
         }
-        res.send(sendToClient);
-        return next();
-    }
+    
 
     const validPass = await bcrypt.compare(req.fields.password,user.password);
 

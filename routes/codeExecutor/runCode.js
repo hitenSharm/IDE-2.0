@@ -1,20 +1,19 @@
-const router=require('express').Router();
+const codeRouter=require('express').Router();
 const runPycode=require('./langs/python'); 
 
 
-router.post('/coderunner' , (req,res) =>{
-    console.log(req.body);
-    // const code=req.body.code;
-    // const input=req.body.input;
-    // console.log("code");
-    // console.log(input);
-    // // const id=req.body.id;
-    // var ans = runPycode(code,input);
-    // console.log(ans);
-    // res.send(ans);    
-    res.send("hi");
+codeRouter.post('/coderunner' , async(req,res) =>{
+    console.log(req.fields);
+    const code=req.fields.code;
+    const input=req.fields.input;
+    console.log(code);
+    console.log(input);
+    // const id=req.body.id;
+    var ans = await runPycode(code,input);
+    console.log(ans);
+    res.send(ans);        
 })
 
 
 
-module.exports=router;
+module.exports=codeRouter;

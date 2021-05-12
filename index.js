@@ -12,21 +12,24 @@ app.use(formidable());
 
 mongoose.connect(
   process.env.DB_URL,
-  { useNewUrlParser: true },
-  () => {
-    console.log("Connected to db!");
-  }
-);
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function (err, res) {
+      try {
+          console.log('Connected to Database');
+      } catch (err) {
+          throw err;
+      }
+  });
 //import routes
 const authRoute = require("./routes/auth");
 const codeExe = require('./routes/codeExecutor/runCode');
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 
 
 app.use("/api/user", authRoute);
-app.use('/coding' ,codeExe);
+app.use("/coding" ,codeExe);
 
 
 app.listen(3000, () => {

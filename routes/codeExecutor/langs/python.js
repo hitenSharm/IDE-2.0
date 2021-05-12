@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { v1: uuidv1, v4: uuidv4 } = require("uuid");
-const exec = require("await-exec");
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
 const validateCode = (code) => {
   wordsLike = [
@@ -15,7 +16,7 @@ const validateCode = (code) => {
   return validate;
 };
 
-const runPycode = (code, input) => {
+const runPycode = async (code, input) => {
   var sendToClient;
 
   if (validateCode(code)) {
