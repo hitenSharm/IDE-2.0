@@ -31,15 +31,16 @@ const runPycode = async (code, input) => {
             console.error(err);
           } else {
             exec("docker run -d -it python:v1 /bin/bash").then((res) => {
-              console.log(res.stdout);
-              var id = resp.stdout.substring(0, 12);
-              var cmd = `docker cp ${codeFile}.py ${id}:/usr/src/app/codeFile.py && docker cp ${inputFile}.txt ${id}:/usr/src/app/inputFile.txt && docker exec ${id} bash -c "python3 codeFile.py<inputFile.txt"`;
-              exec(cmd, { timeout: 20000, maxBuffer: 50000 }).then((resp) => {
-                sendToClient = resp;
+              console.log(res);
+              var id = res.stdout.substring(0, 12);
+              var cmd = `docker cp ${codeFile} ${id}:/usr/src/app/codeFile.py && docker cp ${inputFile} ${id}:/usr/src/app/inputFile.txt && docker exec ${id} bash -c "python3 codeFile.py<inputFile.txt"`;
+              exec(cmd, { timeout: 20000, maxBuffer: 50000 }).then((res) => {
+                console.log(res);
+                sendToClient = res.stdout;
                 fileUnliker(codeFile);
                 fileUnliker(inputFile);
-
-                exec(`docker kill ${id}`).then((resp) =>
+                console.log(sendToClient + "ANSWER");
+                exec(`docker kill ${id}`).then(() =>
                   console.log("Container Stopped")
                 );
                 return sendToClient;
@@ -51,7 +52,7 @@ const runPycode = async (code, input) => {
                 fileUnliker(codeFile);
                 fileUnliker(inputFile);
 
-                exec(`docker kill ${id}`).then((resp) =>
+                exec(`docker kill ${id}`).then(() =>
                   console.log("Container Stopped")
                 );
             });
