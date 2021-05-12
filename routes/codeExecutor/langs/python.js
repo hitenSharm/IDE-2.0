@@ -10,13 +10,13 @@ const validateCode = (code) => {
     "from os import",
     "from subprocess import",
   ];
-  var validate = !wordsLike.some((shit) => {
-    return code.includes(shit);
+  var validate = !wordsLike.some((word) => {
+    return code.includes(word);
   });
   return validate;
 };
 
-const runPycode = async (code, input) => {
+const runPycode = async (code, input , respondToClient) => {
   var sendToClient;
 
   if (validateCode(code)) {
@@ -30,39 +30,37 @@ const runPycode = async (code, input) => {
           if (err) {
             console.error(err);
           } else {
-            exec("docker run -d -it python:v1 /bin/bash").then((res) => {
-              console.log(res);
+            exec("docker run -d -it python:v1 /bin/bash").then((res) => {              
               var id = res.stdout.substring(0, 12);
               var cmd = `docker cp ${codeFile} ${id}:/usr/src/app/codeFile.py && docker cp ${inputFile} ${id}:/usr/src/app/inputFile.txt && docker exec ${id} bash -c "python3 codeFile.py<inputFile.txt"`;
-              exec(cmd, { timeout: 20000, maxBuffer: 50000 }).then((res) => {
-                console.log(res);
-                sendToClient = res.stdout;
-                fileUnliker(codeFile);
-                fileUnliker(inputFile);
-                console.log(sendToClient + "ANSWER");
-                exec(`docker kill ${id}`).then(() =>
-                  console.log("Container Stopped")
-                );
-                return sendToClient;
-              }).catch((err)=>{
-                console.error(err);
+              exec(cmd, { timeout: 20000, maxBuffer: 50000 }).then((res) => {                  
+                sendToClient = res.stdout;                                              
+                respondToClient.send(sendToClient);
+                contentDestroyer(codeFile,inputFile,id);                
+              }).catch((err)=>{                
+                var tempErrorString=err.toString();
+                var len=tempErrorString.length
+                var returnString=tempErrorString.substring(len-cmd.length,len)
+                respondToClient.send(returnString);
+                contentDestroyer(codeFile,inputFile,id); 
             });
-            }).catch((err)=>{
-                console.log(err);
-                fileUnliker(codeFile);
-                fileUnliker(inputFile);
-
-                exec(`docker kill ${id}`).then(() =>
-                  console.log("Container Stopped")
-                );
+            }).catch((err)=>{  
+                 console.log("no docker!")                               
             });
           }
         });
       }
     });
-  }
-  return { done: "nope" };
+  }  
 };
+
+const contentDestroyer = (file1,file2,id)=>{
+  fileUnliker(file1);
+  fileUnliker(file2);
+  exec(`docker kill ${id}`).then(() =>
+    console.log("Container Stopped")
+  );
+}
 
 const fileUnliker = (file = null) => {
   if (file) {

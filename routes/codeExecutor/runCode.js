@@ -6,12 +6,16 @@ codeRouter.post('/coderunner' , async(req,res) =>{
     console.log(req.fields);
     const code=req.fields.code;
     const input=req.fields.input;
-    // console.log(code);
-    // console.log(input);
-    // const id=req.body.id;
-    var ans = await runPycode(code,input);
-    console.log(ans);
-    res.send(ans);        
+    const lang=req.fields.lang;
+    if(code.length==0){
+        res.send({
+            error:"error",
+            message:"Write some code"
+        })
+    }
+    if(lang=="Python")
+    var ans = runPycode(code,input,res);
+
 })
 
 
