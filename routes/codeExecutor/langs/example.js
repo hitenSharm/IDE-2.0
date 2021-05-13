@@ -2,6 +2,7 @@ const fs = require("fs");
 const { v1: uuidv1, v4: uuidv4 } = require("uuid");
 const util = require("util");
 const exec = util.promisify(require("child_process").exec);
+const  contentDestroyer  = require("./contenetDestroyer");
 
 const validateCode = (code) => {
   wordsLike = [
