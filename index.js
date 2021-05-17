@@ -23,6 +23,7 @@ mongoose.connect(
 //import routes
 const authRoute = require("./routes/auth");
 const codeExe = require('./routes/codeExecutor/runCode');
+const codeSaveRoute = require('./routes/saveCode');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
@@ -30,6 +31,7 @@ app.use(express.json());
 
 app.use("/api/user", authRoute);
 app.use("/coding" ,codeExe);
+app.use("/codesave",codeSaveRoute);
 
 
 app.listen(3000, () => {
