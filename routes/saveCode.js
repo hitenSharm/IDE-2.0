@@ -4,19 +4,19 @@ const AllCodes=require('../db/models/codes');
 
 codeSaveRoute.post('/save',auth, async(req,res,next)=>{    
     var id=req.user;
-    console.log(req.user ,"userInfo");
+    // console.log(req.user ,"userInfo");
     var codeInfo=req.fields.code;
     var langData=req.fields.lang;
     var codeName=req.fields.name;
-    console.log(codeName);
+    // console.log(codeName);
     const userPresent = await AllCodes.findOne({userId:id});
     if(userPresent)
     {
-        var codeArr=userPresent.codes;
+        var codeArr=userPresent.codes;        
         var nameExistCount=0;
         for(var i=0;i<codeArr.length;++i)
-        {
-            if(i.name==codeName)
+        {            
+            if(codeArr[i].name==codeName)
             nameExistCount++;
         }
         if(nameExistCount>0)

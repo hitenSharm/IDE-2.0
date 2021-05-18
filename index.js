@@ -24,6 +24,7 @@ mongoose.connect(
 const authRoute = require("./routes/auth");
 const codeExe = require('./routes/codeExecutor/runCode');
 const codeSaveRoute = require('./routes/saveCode');
+const codeShowRoute=require('./routes/showCodes');
 
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
@@ -32,7 +33,7 @@ app.use(express.json());
 app.use("/api/user", authRoute);
 app.use("/coding" ,codeExe);
 app.use("/codesave",codeSaveRoute);
-
+app.use("/seeCodes",codeShowRoute);
 
 app.listen(3000, () => {
   console.log("Serever ready");

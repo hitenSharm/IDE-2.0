@@ -10,7 +10,7 @@ module.exports = function auth(req, res, next) {
     }
     console.log("not verified");
     res.send(sendToClient);
-    next();
+    return next();
   }
   try {
     const verifiedToken = jwt.verify(token, process.env.TOKEN_SECRET);
