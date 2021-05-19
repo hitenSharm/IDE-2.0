@@ -14,7 +14,7 @@ codeShowRoute.get('/show',auth, async(req,res,next)=>{
     }
     else
     {
-        res.send("none");
+        res.send([]);
         return next();
     }
 });

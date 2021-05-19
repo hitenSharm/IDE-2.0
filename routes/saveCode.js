@@ -31,7 +31,7 @@ codeSaveRoute.post('/save',auth, async(req,res,next)=>{
         };
         userPresent.codes.push(newCode);
         try {
-            const savedUser=await userPresent.save();
+            const savedCode=await userPresent.save();        
             const sendToClient={
                 "error":"success",        
                 "message":"Saved!"
@@ -55,7 +55,7 @@ codeSaveRoute.post('/save',auth, async(req,res,next)=>{
             codes:codeArray
         });
         try {
-            const savedData=await newCode.save();
+            const savedData=await newCode.save();            
             const sendToClient={
                 "error":"success",        
                 "message":"Saved!"
