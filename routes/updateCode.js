@@ -8,10 +8,6 @@ codeUpdate.put('/updateCode',auth,async (req,res,next)=>{
     var codeInfo=req.fields.code;
     var langData=req.fields.lang;
     var codeName=req.fields.name;
-    console.log(codeInfo);
-    console.log(langData);
-    console.log(codeName);
-    console.log("insde update code!");
     await AllCodes.updateOne(
         {userId:id , "codes.name":codeName},
         {

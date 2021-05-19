@@ -1,8 +1,7 @@
 const codeRouter = require("express").Router();
 const runCodeIde = require("./langs/runCodeExec");
 
-codeRouter.post("/coderunner", async (req, res) => {
-  console.log(req.fields);
+codeRouter.post("/coderunner", async (req, res) => {  
   const code = req.fields.code;
   const input = req.fields.input;
   const lang = req.fields.lang;
