@@ -15,6 +15,7 @@
 <li class="has-line-data" data-line-start="13" data-line-end="14">Save and edit your code at anytime. Code saved in MongoDB</li>
 <li class="has-line-data" data-line-start="14" data-line-end="15">Provide user input to code</li>
 <li class="has-line-data" data-line-start="15" data-line-end="17">Helpful error messages.</li>
+<li class="has-line-data" data-line-start="15" data-line-end="17">All codes prefetching to reduce future latency!</li>
 </ul>
 <p class="has-line-data" data-line-start="17" data-line-end="21"><img src="https://user-images.githubusercontent.com/56029311/118812918-44150700-b8cc-11eb-8713-71389670d960.png" alt="allcodes"><br>
 <img src="https://user-images.githubusercontent.com/56029311/118812929-46776100-b8cc-11eb-874f-f47ff02f55ff.png" alt="code execution"><br>
