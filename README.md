@@ -3,6 +3,7 @@
 <p class="has-line-data" data-line-start="3" data-line-end="4"><a href="https://www.codefactor.io/repository/github/hitensharm/ide-2.0"><img src="https://www.codefactor.io/repository/github/hitensharm/ide-2.0/badge" alt="CodeFactor"></a></p>
 <p class="has-line-data" data-line-start="5" data-line-end="6">Have you ever wondered how code execution is done by online IDE's?</p>
 <p class="has-line-data" data-line-start="5" data-line-end="6">This project will help you understand! I have tried to make it as organised and as easy to run as I could possibly make it. Take a look at the <b>routes/codeExecutor/langs/example.js</b> file and you will realise that it really can be that simple!</p>
+<p class="has-line-data" data-line-start="5" data-line-end="6"> <b>P.S.</b> I would also reccomend you to read this before trying to understand the project: <a href="https://nodejs.org/api/child_process.html">Child Processes</a></p>
 <p class="has-line-data" data-line-start="5" data-line-end="6">It uses NodeJS and Docker for code execution of c++ and python code.</p>
 <ul>
 <li class="has-line-data" data-line-start="7" data-line-end="8">NodeJS and Docker</li>
